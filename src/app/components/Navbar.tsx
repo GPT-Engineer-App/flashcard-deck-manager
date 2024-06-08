@@ -11,9 +11,7 @@ export default function Navbar() {
           <Link href="/">
             <a className="text-white mr-4">Home</a>
           </Link>
-          <Link href="/decks">
-            <a className="text-white">Decks</a>
-          </Link>
+          
         </div>
       </div>
     </nav>
