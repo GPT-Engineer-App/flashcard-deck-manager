@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import Link from "next/link";
 
 interface Deck {
@@ -10,6 +11,8 @@ interface Deck {
 
 export default function Decks() {
   const [decks, setDecks] = useState<Deck[]>([]);
+
+  const router = useRouter();
 
   useEffect(() => {
     const storedDecks = JSON.parse(localStorage.getItem("decks") || "[]");
@@ -35,12 +38,10 @@ export default function Decks() {
       <button onClick={addDeck} className="bg-blue-500 text-white px-4 py-2 mb-4 rounded">Add Deck</button>
       <ul>
         {decks.map(deck => (
-          <li key={deck.id} className="mb-2 flex justify-between items-center">
-            <Link href={`/deck/${deck.id}`}>
-              <a className="text-blue-500 underline">{deck.name}</a>
-            </Link>
+          <div key={deck.id} className="mb-2 flex justify-between items-center">
+            <a onClick={() => router.push(`/deck/${deck.id}`)} className="text-blue-500 underline cursor-pointer">{deck.name}</a>
             <button onClick={() => deleteDeck(deck.id)} className="bg-red-500 text-white px-2 py-1 ml-2 rounded">Delete</button>
-          </li>
+          </div>
         ))}
       </ul>
     </div>
