@@ -42,12 +42,12 @@ export default function Learn() {
   const currentCard = cards[currentCardIndex];
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 text-center">
       <h1 className="text-3xl font-bold mb-4">Learn Mode</h1>
-      <div className="border p-4 mb-4" onClick={flipCard}>
+      <div className="border p-4 mb-4 rounded cursor-pointer" onClick={flipCard}>
         {isFlipped ? <p>Answer: {currentCard.answer}</p> : <p>Question: {currentCard.question}</p>}
       </div>
-      <button onClick={nextCard} className="bg-blue-500 text-white px-4 py-2">Next Card</button>
+      <button onClick={nextCard} className="bg-blue-500 text-white px-4 py-2 rounded">Next Card</button>
     </div>
   );
 }

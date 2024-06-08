@@ -32,14 +32,14 @@ export default function Decks() {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4">Decks</h1>
-      <button onClick={addDeck} className="bg-blue-500 text-white px-4 py-2 mb-4">Add Deck</button>
+      <button onClick={addDeck} className="bg-blue-500 text-white px-4 py-2 mb-4 rounded">Add Deck</button>
       <ul>
         {decks.map(deck => (
-          <li key={deck.id} className="mb-2">
+          <li key={deck.id} className="mb-2 flex justify-between items-center">
             <Link href={`/deck/${deck.id}`}>
               <a className="text-blue-500 underline">{deck.name}</a>
             </Link>
-            <button onClick={() => deleteDeck(deck.id)} className="bg-red-500 text-white px-2 py-1 ml-2">Delete</button>
+            <button onClick={() => deleteDeck(deck.id)} className="bg-red-500 text-white px-2 py-1 ml-2 rounded">Delete</button>
           </li>
         ))}
       </ul>
