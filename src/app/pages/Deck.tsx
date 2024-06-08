@@ -54,14 +54,14 @@ export default function Deck() {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4">{deckName}</h1>
-      <button onClick={addCard} className="bg-blue-500 text-white px-4 py-2 mb-4">Add Card</button>
+      <button onClick={addCard} className="bg-blue-500 text-white px-4 py-2 mb-4 rounded">Add Card</button>
       <ul>
         {cards.map(card => (
           <li key={card.id} className="mb-2">
-            <div className="border p-2">
+            <div className="border p-2 rounded">
               <p>Question: {card.question}</p>
               <p>Answer: {card.answer}</p>
-              <button onClick={() => deleteCard(card.id)} className="bg-red-500 text-white px-2 py-1 mt-2">Delete</button>
+              <button onClick={() => deleteCard(card.id)} className="bg-red-500 text-white px-2 py-1 mt-2 rounded">Delete</button>
             </div>
           </li>
         ))}
