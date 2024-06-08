@@ -15,6 +15,9 @@ export default function Deck() {
   const { id } = router.query;
   const [cards, setCards] = useState<Card[]>([]);
   const [deckName, setDeckName] = useState("");
+  const [editingCardId, setEditingCardId] = useState<string | null>(null);
+  const [newQuestion, setNewQuestion] = useState("");
+  const [newAnswer, setNewAnswer] = useState("");
 
   useEffect(() => {
     if (id) {
@@ -40,6 +43,24 @@ export default function Deck() {
     updateDeck(updatedCards);
   };
 
+  const startEditing = (card: Card) => {
+    setEditingCardId(card.id);
+    setNewQuestion(card.question);
+    setNewAnswer(card.answer);
+  };
+
+  const saveCard = (cardId: string) => {
+    const updatedCards = cards.map(card => {
+      if (card.id === cardId) {
+        return { ...card, question: newQuestion, answer: newAnswer };
+      }
+      return card;
+    });
+    setCards(updatedCards);
+    updateDeck(updatedCards);
+    setEditingCardId(null);
+  };
+
   const updateDeck = (updatedCards: Card[]) => {
     const storedDecks = JSON.parse(localStorage.getItem("decks") || "[]");
     const updatedDecks = storedDecks.map((deck: any) => {
@@ -58,11 +79,32 @@ export default function Deck() {
       <ul>
         {cards.map(card => (
           <li key={card.id} className="mb-2">
-            <div className="border p-2 rounded">
-              <p>Question: {card.question}</p>
-              <p>Answer: {card.answer}</p>
-              <button onClick={() => deleteCard(card.id)} className="bg-red-500 text-white px-2 py-1 mt-2 rounded">Delete</button>
-            </div>
+            {editingCardId === card.id ? (
+              <div className="border p-2 rounded">
+                <input
+                  type="text"
+                  value={newQuestion}
+                  onChange={(e) => setNewQuestion(e.target.value)}
+                  placeholder="Question"
+                  className="border p-2 rounded mb-2 w-full"
+                />
+                <input
+                  type="text"
+                  value={newAnswer}
+                  onChange={(e) => setNewAnswer(e.target.value)}
+                  placeholder="Answer"
+                  className="border p-2 rounded mb-2 w-full"
+                />
+                <button onClick={() => saveCard(card.id)} className="bg-green-500 text-white px-2 py-1 rounded">Save</button>
+              </div>
+            ) : (
+              <div className="border p-2 rounded">
+                <p>Question: {card.question}</p>
+                <p>Answer: {card.answer}</p>
+                <button onClick={() => startEditing(card)} className="bg-yellow-500 text-white px-2 py-1 mt-2 rounded">Edit</button>
+                <button onClick={() => deleteCard(card.id)} className="bg-red-500 text-white px-2 py-1 mt-2 rounded">Delete</button>
+              </div>
+            )}
           </li>
         ))}
       </ul>
